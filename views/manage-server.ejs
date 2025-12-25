@@ -1,0 +1,38 @@
+<!DOCTYPE html><html><head><title>Manage</title><link rel="stylesheet" href="/css/style.css"></head><body>
+    <nav><div class="nav-brand">🤖 Vex</div><div class="nav-user"><img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png" class="avatar-small"><a href="/logout" class="logout-btn">Logout</a></div></nav>
+    <div class="container">
+        <a href="/" class="back-link">← Servers</a>
+        <h1>Settings: <%= guild.name %></h1>
+
+        <h2>🛡️ Bad Words</h2>
+        <form action="/manage/<%= guild.id %>/add" method="POST"><div style="display:flex; gap:10px;"><input type="text" name="word" placeholder="Word to ban"><button class="add-btn" style="width:auto;">Add</button></div></form>
+        <ul><% badWords.forEach(w => { %><li><%= w %><form action="/manage/<%= guild.id %>/remove" method="POST" style="display:inline; background:none; padding:0; border:none;"><input type="hidden" name="word" value="<%= w %>"><button class="del-btn">X</button></form></li><% }) %></ul>
+
+        <h2>👋 Welcome</h2>
+        <form action="/manage/<%= guild.id %>/welcome" method="POST">
+            <label>Enabled</label><select name="enabled"><option value="true">Yes</option><option value="false">No</option></select>
+            <label>Channel ID</label><input type="text" name="channelId" value="<%= welcome.channelId %>">
+            <label>Message</label><textarea name="message"><%= welcome.message || "Welcome {user}!" %></textarea>
+            <button class="add-btn">Save</button>
+        </form>
+
+        <h2>🤖 Custom Commands</h2>
+        <form action="/manage/<%= guild.id %>/custom-command" method="POST"><div style="display:flex; gap:10px;"><input name="trigger" placeholder="!help"><input name="reply" placeholder="Text..."><button class="add-btn" style="width:auto;">Add</button></div></form>
+        <ul><% Object.keys(customCommands).forEach(cmd => { %><li><strong><%= cmd %></strong>: <%= customCommands[cmd] %><form action="/manage/<%= guild.id %>/delete-command" method="POST" style="display:inline; background:none; padding:0; border:none;"><input type="hidden" name="trigger" value="<%= cmd %>"><button class="del-btn">X</button></form></li><% }) %></ul>
+
+        <h2>🎭 Reaction Roles</h2>
+        <form action="/manage/<%= guild.id %>/create-role-panel" method="POST">
+            <input name="channelId" placeholder="Channel ID"><input name="roleId" placeholder="Role ID"><input name="buttonLabel" placeholder="Button Label"><input name="messageText" placeholder="Message Text"><button class="add-btn">Create Panel</button>
+        </form>
+
+        <h2>📩 Ticket System</h2>
+        <form action="/manage/<%= guild.id %>/create-ticket-panel" method="POST">
+            <input name="channelId" placeholder="Channel ID"><input name="title" placeholder="Panel Title"><button class="add-btn">Create Panel</button>
+        </form>
+
+        <h2>📝 Audit Logs</h2>
+        <form action="/manage/<%= guild.id %>/logging" method="POST">
+            <input name="logChannelId" placeholder="Log Channel ID" value="<%= logging.channelId %>"><button class="add-btn">Save</button>
+        </form>
+    </div>
+</body></html>

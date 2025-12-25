@@ -1,0 +1,14 @@
+<!DOCTYPE html><html><head><title>Select Server</title><link rel="stylesheet" href="/css/style.css"></head><body>
+    <nav><div class="nav-brand">🤖 Vex Dashboard</div><div class="nav-user"><img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png" class="avatar-small"><span><%= user.username %></span><a href="/logout" class="logout-btn">Logout</a></div></nav>
+    <div class="container">
+        <h1>Select a Server</h1>
+        <div class="grid">
+            <% guilds.forEach(function(guild) { %>
+                <a href="/manage/<%= guild.id %>" class="card">
+                    <% if (guild.icon) { %> <img src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png"> <% } else { %> <div class="avatar-small" style="margin:auto; display:flex; align-items:center; justify-content:center; background:#5865F2;"><%= guild.name.charAt(0) %></div> <% } %>
+                    <h3><%= guild.name %></h3>
+                </a>
+            <% }); %>
+        </div>
+    </div>
+</body></html>
